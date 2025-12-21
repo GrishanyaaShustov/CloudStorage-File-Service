@@ -1,26 +1,29 @@
 CREATE TABLE IF NOT EXISTS files (
-                                     user_id         UUID NOT NULL,
-                                     id              UUID NOT NULL DEFAULT uuidv7(),
+                                     user_id     UUID NOT NULL,
+                                     id          UUID NOT NULL DEFAULT uuidv7(),
 
-                                     folder_id       UUID NULL,
-                                     name            TEXT NOT NULL,
+                                     folder_id   UUID NULL,
+                                     name        TEXT NOT NULL,
 
-                                     s3_bucket       TEXT NOT NULL,
-                                     s3_key          TEXT NOT NULL,
+                                     s3_bucket   TEXT NOT NULL,
+                                     s3_key      TEXT NOT NULL,
 
-                                     content_type    TEXT NULL,
-                                     size_bytes      BIGINT NOT NULL CHECK (size_bytes >= 0),
-                                     sha256          TEXT NULL,
-                                     etag            TEXT NULL,
+                                     MIME_type TEXT NOT NULL,
+                                     size_bytes   BIGINT NOT NULL CHECK (size_bytes >= 0),
 
-                                     created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
-                                     updated_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
+                                     status      TEXT NOT NULL DEFAULT 'uploading',
+
+                                     created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+                                     updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
 
                                      PRIMARY KEY (user_id, id),
 
                                      FOREIGN KEY (user_id, folder_id)
                                          REFERENCES folders(user_id, id)
-                                         ON DELETE SET NULL
+                                         ON DELETE CASCADE,
+
+                                     CONSTRAINT chk_files_status
+                                         CHECK (status IN ('uploading', 'uploaded'))
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS ux_files_user_folder_name
