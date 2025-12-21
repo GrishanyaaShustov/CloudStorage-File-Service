@@ -8,7 +8,8 @@ import (
 )
 
 type Config struct {
-	Env string `yaml:"env"`
+	Env      string         `yaml:"env"`
+	Postgres PostgresConfig `yaml:"postgres"`
 }
 
 func MustLoad() *Config {

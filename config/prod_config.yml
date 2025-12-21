@@ -1,1 +1,11 @@
 env: "prod"
+
+postgres:
+  name: "filedb"
+
+  max_open_conns: 200
+  max_idle_conns: 15
+  conn_max_lifetime: 30m
+  conn_max_idle_time: 10m
+
+  ssl_mode: "disable"
