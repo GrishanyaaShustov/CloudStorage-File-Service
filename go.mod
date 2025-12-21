@@ -4,6 +4,7 @@ go 1.25.4
 
 require (
 	github.com/fatih/color v1.18.0
+	github.com/google/uuid v1.6.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/jackc/pgx/v5 v5.7.6
 	golang.org/x/exp v0.0.0-20251219203646-944ab1f22d93
