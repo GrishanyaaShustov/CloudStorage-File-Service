@@ -5,6 +5,7 @@ import (
 	"file-service/internal/domain"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 // FileSystemRepo defines persistence operations for a user-scoped
@@ -196,4 +197,8 @@ type FileSystemRepo interface {
 		userID uuid.UUID,
 		fileID uuid.UUID,
 	) error
+}
+
+type repo struct {
+	pool *pgxpool.Pool
 }
