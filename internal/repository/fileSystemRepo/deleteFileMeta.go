@@ -1,0 +1,31 @@
+package fileSystemRepo
+
+import (
+	"context"
+	"file-service/internal/domain"
+
+	"github.com/google/uuid"
+)
+
+func (r *repo) DeleteFileMeta(
+	ctx context.Context,
+	userID uuid.UUID,
+	fileID uuid.UUID,
+) error {
+	cmd, err := r.pool.Exec(
+		ctx,
+		queryDeleteFileMeta,
+		userID,
+		fileID,
+	)
+	if err != nil {
+		return mapRepoError(err)
+	}
+
+	if cmd.RowsAffected() == 0 {
+		// файл не найден или не принадлежит пользователю
+		return domain.ErrNotFound
+	}
+
+	return nil
+}
