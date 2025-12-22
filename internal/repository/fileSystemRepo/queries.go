@@ -1,4 +1,4 @@
-package repository
+package fileSystemRepo
 
 const (
 	queryCreateFolder = `
@@ -18,7 +18,7 @@ const (
 		parent_id,
 		name,
 		created_at;
-`
+	`
 
 	queryGetFolder = `
 	SELECT

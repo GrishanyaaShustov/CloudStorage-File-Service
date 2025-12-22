@@ -1,4 +1,4 @@
-package repository
+package fileSystemRepo
 
 import (
 	"context"
@@ -8,13 +8,13 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-// FileSystemRepo defines persistence operations for a user-scoped
+// Repository defines persistence operations for a user-scoped
 // hierarchical file system (folders + files stored in S3, metadata in DB).
 //
 // All methods are strictly scoped by userID.
 // Passing a valid context.Context is required; methods must respect
 // cancellation and deadlines.
-type FileSystemRepo interface {
+type Repository interface {
 
 	// CreateFolder creates a new folder for the given user.
 	//
@@ -201,4 +201,8 @@ type FileSystemRepo interface {
 
 type repo struct {
 	pool *pgxpool.Pool
+}
+
+func New(pool *pgxpool.Pool) Repository {
+	return &repo{pool: pool}
 }
