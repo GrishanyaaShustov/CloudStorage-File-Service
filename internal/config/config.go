@@ -10,6 +10,7 @@ import (
 type Config struct {
 	Env      string         `yaml:"env"`
 	Postgres PostgresConfig `yaml:"postgres"`
+	S3       S3Config
 }
 
 func MustLoad() *Config {
